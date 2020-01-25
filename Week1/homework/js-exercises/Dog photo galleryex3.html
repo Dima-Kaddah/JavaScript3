@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Dog photo gallery</title>
+</head>
+
+<body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+  <script>
+
+    //first button
+    let btn1 = document.createElement('button');
+    btn1.innerText = 'show image with XML';
+    document.body.appendChild(btn1);
+
+    //second button
+    let btn2 = document.createElement('button');
+    btn2.innerText = 'show image with axios';
+    document.body.appendChild(btn2);
+
+    //make ul
+    let myUl = document.createElement('ul');
+    document.body.appendChild(myUl);
+
+    //function get data XML
+    const getDataXml = (method, url) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(method, url);
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+        const data = xhr.response;
+        if (data) {
+          displayImg(data.message, 'XML')
+        } else {
+          displayImg('', 'sorry something wrong')
+        }
+      }
+      xhr.send();
+    };
+
+    const getData = () => {
+      getDataXml('GET', 'https://dog.ceo/api/breeds/image/random');
+    };
+
+    //firt btn event
+    btn1.addEventListener('click', getData);
+
+
+    // getDataAxios
+    function getDataAxios() {
+      axios
+        .get('https://dog.ceo/api/breeds/image/random')
+        .then(response => {
+          if (response) {
+            displayImg(response.data.message, "AXIOS")
+          } else {
+            displayImg('', 'sorry something wrong')
+          }
+        })
+        .catch(error => {
+          // handle error
+          console.log('an error', error);
+        })
+        .finally(() => {
+          // always executed
+          console.log('every thing is ready to play');
+        });
+    }
+
+    //second btn event
+    btn2.addEventListener('click', getDataAxios);
+    let list = document.createElement('li');
+    // function to get imgs from data
+    let displayImg = (getTheImge, way) => {
+      myUl.appendChild(list);
+      list.innerText = way;
+      let dogImg = document.createElement('img');
+      dogImg.src = (getTheImge);
+      list.appendChild(dogImg);
+      dogImg.style.width = ('50%');
+      dogImg.style.height = ('500px')
+
+    }
+  </script>
+</body>
+
+</html>
