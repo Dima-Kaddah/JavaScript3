@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Random User</title>
+</head>
+
+<body>
+  <button id="get-btn">Get Data</button>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+  <script>
+    'use strict';
+    //request with XML
+    //get id of the btn i will use to get data
+    const getBtn = document.getElementById('get-btn');
+    // sendHttpRequset is function thats can GEt data from any url
+    const sendHttpRequset = (method, url) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(method, url);
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+        const data = xhr.response;
+        console.log(data);
+        // i would like to display version in the info with event
+        if (!!data) {
+          getBtn.addEventListener('click', getInfo);
+          function getInfo() {
+            let nameData = data.results[0].name;
+            let info = document.createElement('h1');
+            info.innerHTML = nameData['title'] + ' ' + nameData['first'] + ' ' + nameData['last'];
+            document.body.appendChild(info);
+          }
+        }
+      }
+      xhr.send();
+    };
+
+    const getData = () => {
+      sendHttpRequset('GET', 'https://www.randomuser.me/api');
+    };
+    //call the data function
+    getData();
+
+    //------------------SECOND way to GET data 'with axios'---------------//
+    // request with axios
+    function getDataAxios() {
+      axios
+        .get('https://www.randomuser.me/api')
+        .then(response => {
+          // handle success
+          console.log('this apparently was succesfull', response);
+        })
+        .catch(error => {
+          // handle error
+          console.log('an error', error);
+        })
+        .finally(() => {
+          // always executed
+          console.log('every thing is ready to play');
+        });
+    }
+
+    getDataAxios();
+
+  </script>
+</body>
+
+</html>
