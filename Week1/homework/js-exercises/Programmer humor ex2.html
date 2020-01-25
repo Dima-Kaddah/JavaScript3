@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Programmer humor</title>
+</head>
+
+<body>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>
+  <script>
+    'use strict';
+    //request with XML
+    function getDataXml() {
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', 'https://xkcd.now.sh/?comic=614')
+      xhr.responseType = 'json';
+      xhr.onload = () => {
+        const data = xhr.response;
+        //console data with XML
+        console.log(data);
+        //ceate h2 for headline
+        let header1 = document.createElement('h2')
+        document.body.appendChild(header1);
+        if (!!data) {
+          header1.innerText = "image with XML"
+          //create img tag 
+          let img1 = document.createElement('img');
+          // set src for img tag
+          img1.setAttribute('src', data.img);
+          // set the img to the document(body)
+          document.body.appendChild(img1);
+        } else {
+          header1.innerText = "somthing wrong with get data with XML";
+        }
+      };
+      xhr.send();
+    }
+
+    getDataXml();
+
+    // request with axios
+    function getDataAxios() {
+      axios
+        .get('https://xkcd.now.sh/?comic=614')
+        // handle success
+        .then(response => {
+          //console data with axios
+          const dataAxios = response;
+          console.log(dataAxios);
+          //ceate h2 for headline
+          let header2 = document.createElement('h2')
+          document.body.appendChild(header2);
+
+          if (!!dataAxios) {
+            header2.innerText = "image with axios"
+            //create img tag 
+            let img2 = document.createElement('img');
+            // set src for img tag
+            img2.setAttribute('src', dataAxios.data.img);
+            // set the img to the document(body)
+            document.body.appendChild(img2);
+          } else {
+            header2.innerText = "somthing wrong with get data with XML";
+          }
+        })
+        // handle error
+        .catch(error => {
+          console.log(error);
+        })
+        .finally(() => {
+          // always executed
+          console.log('every thing is ready to play');
+        });
+    }
+    getDataAxios();
+
+  </script>
+</body>
+
+</html>
