@@ -13,14 +13,14 @@
   <script>
 
     //first button
-    let btn1 = document.createElement('button');
-    btn1.innerText = 'show image with XML';
-    document.body.appendChild(btn1);
+    let xhrButton = document.createElement('button');
+    xhrButton.innerText = 'show image with XML';
+    document.body.appendChild(xhrButton);
 
     //second button
-    let btn2 = document.createElement('button');
-    btn2.innerText = 'show image with axios';
-    document.body.appendChild(btn2);
+    let axiosButton = document.createElement('button');
+    axiosButton.innerText = 'show image with axios';
+    document.body.appendChild(axiosButton);
 
     //make ul
     let myUl = document.createElement('ul');
@@ -47,7 +47,7 @@
     };
 
     //firt btn event
-    btn1.addEventListener('click', getData);
+    xhrButton.addEventListener('click', getData);
 
 
     // getDataAxios
@@ -72,7 +72,7 @@
     }
 
     //second btn event
-    btn2.addEventListener('click', getDataAxios);
+    axiosButton.addEventListener('click', getDataAxios);
     let list = document.createElement('li');
     // function to get imgs from data
     let displayImg = (getTheImge, way) => {
