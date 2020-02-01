@@ -34,7 +34,16 @@
             document.body.appendChild(info);
           }
         }
+        ///Error handling for xhr 
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status == 200) {
+          console.log(xhr.response);
+        } else {
+          console.error(`Network error: ${xhr.status} - ${xhr.statusText}`);
+        }
       }
+      xhr.onerror = () => {
+        console.error('Request failed');
+      };
       xhr.send();
     };
 
