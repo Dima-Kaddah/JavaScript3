@@ -40,10 +40,13 @@
     const table = createAndAppend('table', li);
     //male arry for new keys to show
     const displayKeys = ['Repository:', 'Description:', 'Forks:', 'Updated:'];
-    //get the keys from repo object
-    let keys = Object.keys(repo);
     //make array of keys from repo object
-    const keysNeeded = [keys[2], keys[7], keys[8], keys[48]];
+    const keysNeeded = [
+      repo.name,
+      repo.description,
+      repo.fork,
+      repo.updated_at,
+    ];
     //loop to get new name for keys and set the value
     for (let i = 0; i < displayKeys.length; i++) {
       let tr = createAndAppend('tr', table);
@@ -57,7 +60,7 @@
         });
         //make td for rest of info
       } else {
-        createAndAppend('td', tr, { text: repo[keysNeeded[i]] });
+        createAndAppend('td', tr, { text: keysNeeded[i] });
       }
     }
   }
@@ -80,7 +83,7 @@
       repos.sort((rep, nestRep) => rep.name.localeCompare(nestRep.name));
 
       //to display only 10 repo
-      for (let i = 38; i < repos.length; i++) {
+      for (let i = 0; i < 10; i++) {
         renderRepoDetails(repos[i], ul);
       }
     });
