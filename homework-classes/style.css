@@ -1,3 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Gelasio&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  width: 80%;
+  background-color: whitesmoke;
+  margin: auto;
+  font-family: 'Gelasio', serif;
+  position: relative;
+}
+
+.header {
+  background-color: rgb(52, 63, 165);
+  padding: 30px;
+  text-align: left;
+  color: white;
+  font-size: 30px;
+  position: relative;
+}
+
+.repo-select {
+  font-size: 20px;
+}
+
+.main-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.contributors-container {
+  width: 50%;
+  margin-left: 10px;
+  background-color: rgba(225, 225, 225, 0.947);
+  box-shadow: inset 0 0 0 5px #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 30px;
+}
+.repo-container {
+  background-color: rgba(225, 225, 225, 0.947);
+  width: 50%;
+  margin-right: 10px;
+  padding: 30px;
+  box-shadow: inset 0 0 0 5px #ccc;
+  max-height: 200px;
+}
+.contributorHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: rgb(151, 147, 147) solid 2px;
+}
+.ImgDiv {
+  padding: 10px;
+}
+.loginName {
+  padding-top: 30px;
+}
+.loginName a {
+  text-decoration: none;
+}
+.buttonDiv {
+  padding: 30px;
+}
+button {
+  padding: 5px;
+  border-radius: 5px;
+  border: rgb(113, 105, 105);
+  background-color: rgb(113, 105, 105);
+  color: #ccc;
+}
+.reposTable td {
+  padding: 5px;
+}
+[src] {
+  width: 100px;
+}
 .alert-error {
-  color: red;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding: 40px;
+}
+.alert-error:after {
+  content: '';
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  opacity: 0.4;
+  border-radius: 30px;
+}
+
+@media screen and (max-width: 800px) {
+  #root {
+    width: 98%;
+    font-size: 14px;
+  }
+  .header {
+    font-size: 20px;
+  }
+
+  [src] {
+    width: 50px;
+  }
+  .repo-select {
+    font-size: 12px;
+  }
+  .main-container {
+    flex-direction: column;
+  }
+  .contributors-container {
+    width: 100%;
+    margin-left: 0px;
+    padding: 20px;
+  }
+  .repo-container {
+    width: 100%;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    padding: 20px;
+    max-height: 300px;
+  }
 }
