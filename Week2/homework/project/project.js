@@ -21,11 +21,12 @@
   const root = document.getElementById('root');
   const hDiv = createAndAppend('div', root);
   hDiv.classList.add('hDiv');
-  const headline = createAndAppend('h1', hDiv);
-  headline.innerText = 'HYF Repositories';
-  headline.classList.add('headline');
+  const headline = createAndAppend('h1', hDiv, {
+    class: 'headline',
+    text: 'HYF Repositories',
+  });
 
-  // repos info to display when select it ---- step(3)
+  // repos info to display when select it ---- step(2)
   function reposSet(reposDisplay, repos) {
     //create table for repos
     const table = createAndAppend('table', reposDisplay);
@@ -58,9 +59,8 @@
       }
     }
   }
-
-  // second Promise fetch in this function ---- step(3)this function work together with reposSet function
-  function contributorsFetchSecondPromise(contributorsDisplay, url) {
+  // second Promise fetch for contributors in this function ---- step(2)
+  function contributorsFetch(contributorsDisplay, url) {
     fetch(url).then(contributors => {
       contributors
         .json()
@@ -78,7 +78,7 @@
     });
   }
 
-  //contributors info to display when select repo ---- step (4)
+  //contributors info to display when select repo ---- step (3)
   function contributorsSet(contributor, contributorsDisplay) {
     //create contributorHolder 'div' fr contributors
     const contributorHolder = createAndAppend('div', contributorsDisplay);
@@ -115,57 +115,53 @@
       }
     }
   }
-  // second function in the project ------ step(2)
-  function main(repos) {
-    //create container
-    const container = createAndAppend('div', root, { class: 'container' });
-    // sort the names
-    repos.sort((rep, next) => rep.name.localeCompare(next.name));
-    //create div for repos data
-    const reposDisplay = createAndAppend('div', container);
-    //create div for contributors data
-    const contributorsDisplay = createAndAppend('div', container);
-    //create select
-    const select = createAndAppend('select', hDiv, { class: 'select' });
 
-    //to display only 10 repos in the options
-    // i make the i = -1 to get empty option
-    //loop and create the options
-    for (let i = -1; i < 10; i++) {
-      if (i === -1) {
-        createAndAppend('option', select, {
-          text: 'please Select Repositories ',
-          value: [i],
-        });
-      } else {
-        createAndAppend('option', select, {
-          text: repos[i].name.toLowerCase(),
-          value: [i],
-        });
-      }
-    }
-    select.onchange = function() {
-      //remove the divs and classes
-      reposDisplay.innerText = '';
-      reposDisplay.classList.remove('reposDisplay');
-      contributorsDisplay.innerText = '';
-      contributorsDisplay.classList.remove('contributorsDisplay');
-      // select to display with the function
-      //get the index of select = 10
-      const selectIndex = select.value;
-      reposSet(reposDisplay, repos[selectIndex]);
-      contributorsFetchSecondPromise(
-        contributorsDisplay,
-        repos[selectIndex].contributors_url,
-      );
-    };
-  }
   // first promise to fetch data to json then take it to main function------ step(1)
-  function promise(url) {
+  function fetchREpos(url) {
     fetch(url)
       .then(res => {
         res.json().then(repos => {
-          main(repos);
+          // function main(repos) {
+          //create container
+          const container = createAndAppend('div', root, {
+            class: 'container',
+          });
+          // sort the names
+          repos.sort((rep, next) => rep.name.localeCompare(next.name));
+          //create div for repos data
+          const reposDisplay = createAndAppend('div', container);
+          //create div for contributors data
+          const contributorsDisplay = createAndAppend('div', container);
+          //create select
+          const select = createAndAppend('select', hDiv, { class: 'select' });
+          for (let i = -1; i < 10; i++) {
+            if (i === -1) {
+              createAndAppend('option', select, {
+                text: 'please Select Repositories ',
+                value: [i],
+              });
+            } else {
+              createAndAppend('option', select, {
+                text: repos[i].name.toLowerCase(),
+                value: [i],
+              });
+            }
+          }
+          select.onchange = function() {
+            //remove the divs and classes
+            reposDisplay.innerText = '';
+            reposDisplay.classList.remove('reposDisplay');
+            contributorsDisplay.innerText = '';
+            contributorsDisplay.classList.remove('contributorsDisplay');
+            // select to display with the function
+            //get the index of select = 10
+            const selectIndex = select.value;
+            reposSet(reposDisplay, repos[selectIndex]);
+            contributorsFetch(
+              contributorsDisplay,
+              repos[selectIndex].contributors_url,
+            );
+          };
         });
       })
       .catch(err => {
@@ -178,5 +174,5 @@
 
   const HYF_REPOS_URL =
     'https://api.github.com/orgs/HackYourFuture/repos?per_page=100';
-  window.onload = () => promise(HYF_REPOS_URL);
+  window.onload = () => fetchREpos(HYF_REPOS_URL);
 }
