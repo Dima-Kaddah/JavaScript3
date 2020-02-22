@@ -134,10 +134,10 @@
           const contributorsDisplay = createAndAppend('div', container);
           //create select
           const select = createAndAppend('select', hDiv, { class: 'select' });
-          for (let i = 0; i < 10; i++) {
-            if (i === 0) {
+          for (let i = -1; i < 10; i++) {
+            if (i === -1) {
               createAndAppend('option', select, {
-                text: repos[0].name,
+                text: 'Pleas Select Repositorie',
                 value: [i],
               });
               reposSet(reposDisplay, repos[0]);
