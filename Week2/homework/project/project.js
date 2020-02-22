@@ -140,6 +140,7 @@
                 text: 'please Select Repositories ',
                 value: [i],
               });
+              reposSet(reposDisplay, repos[0]);
             } else {
               createAndAppend('option', select, {
                 text: repos[i].name.toLowerCase(),
